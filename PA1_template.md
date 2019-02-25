@@ -23,6 +23,7 @@ data <- read.csv("activity.csv")   #read data
 data$date <- as.Date(data$date)    #transform dates to date class
 
 # rename intervals
+old_int <- unique(data$interval)  #keep old annotation
 data$interval <- as.factor(data$interval)
 levels(data$interval) <- as.integer(c(1:288))
 ```
@@ -48,7 +49,7 @@ ggplot(sum_df, aes(x=date, y=total_steps))+
   ggtitle("Total number of steps taken per day")
 ```
 
-![plot of chunk unnamed-chunk-26](figure/unnamed-chunk-26-1.png)
+![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png)
 
 
 *Calculate and report the mean and median of the total number of steps taken per day*
@@ -78,17 +79,19 @@ ggplot(int_sum, aes(x=as.numeric(interval), y=mean_steps))+
   ggtitle("Average number of steps over time")
 ```
 
-![plot of chunk unnamed-chunk-27](figure/unnamed-chunk-27-1.png)
+![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-1.png)
 
 *Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?*
 
 ```r
 # calculate time interval with the highest mean steps
 max_steps <- max(int_sum$mean_steps, na.rm=T) 
-max_int <- int_sum$interval[int_sum$mean_steps == max_steps]
+max_int <- as.numeric(int_sum$interval[int_sum$mean_steps == max_steps])
+
+max_int <- old_int[max_int]
 ```
 
-The interval **`max_int`** contains the maximum number of steps on average. 
+The interval **835** contains the maximum number of steps on average. It corresponds to 8:35h.
 
 
 
@@ -137,7 +140,7 @@ ggplot(sum_df_imp, aes(x=date, y=total_steps))+
 ## Warning: Ignoring unknown parameters: binwidth, bins, pad
 ```
 
-![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31-1.png)
+![plot of chunk unnamed-chunk-29](figure/unnamed-chunk-29-1.png)
 
 ```r
 # calculate mean of total steps per day
@@ -178,5 +181,5 @@ ggplot(int_sum_weekend, aes(x=as.numeric(interval), y=mean_steps))+
   facet_wrap(.~weekend)
 ```
 
-![plot of chunk unnamed-chunk-33](figure/unnamed-chunk-33-1.png)
+![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31-1.png)
 

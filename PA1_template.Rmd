@@ -3,9 +3,8 @@ title: "ReproducableResearchProoject1"
 author: "Jelena"
 date: "February 25, 2019"
 output: 
-  html_document:
   keep_md: true
-
+  html_document:
 ---
 
 
@@ -24,6 +23,7 @@ data <- read.csv("activity.csv")   #read data
 data$date <- as.Date(data$date)    #transform dates to date class
 
 # rename intervals
+old_int <- unique(data$interval)  #keep old annotation
 data$interval <- as.factor(data$interval)
 levels(data$interval) <- as.integer(c(1:288))
 ```
@@ -83,11 +83,12 @@ ggplot(int_sum, aes(x=as.numeric(interval), y=mean_steps))+
 
 # calculate time interval with the highest mean steps
 max_steps <- max(int_sum$mean_steps, na.rm=T) 
-max_int <- int_sum$interval[int_sum$mean_steps == max_steps]
+max_int <- as.numeric(int_sum$interval[int_sum$mean_steps == max_steps])
 
+max_int <- old_int[max_int]
 ```
 
-The interval **`max_int`** contains the maximum number of steps on average. 
+The interval **`r max_int`** contains the maximum number of steps on average. It corresponds to 8:35h.
 
 
 
