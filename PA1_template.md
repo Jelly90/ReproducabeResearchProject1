@@ -3,9 +3,8 @@ title: "ReproducableResearchProoject1"
 author: "Jelena"
 date: "February 25, 2019"
 output: 
-  html_document:
   keep_md: true
-
+  html_document:
 ---
 
 
@@ -22,6 +21,10 @@ library(ggplot2)
 
 data <- read.csv("activity.csv")   #read data
 data$date <- as.Date(data$date)    #transform dates to date class
+
+# rename intervals
+data$interval <- as.factor(data$interval)
+levels(data$interval) <- as.integer(c(1:288))
 ```
 
 
@@ -45,7 +48,7 @@ ggplot(sum_df, aes(x=date, y=total_steps))+
   ggtitle("Total number of steps taken per day")
 ```
 
-![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
+![plot of chunk unnamed-chunk-26](figure/unnamed-chunk-26-1.png)
 
 
 *Calculate and report the mean and median of the total number of steps taken per day*
@@ -70,21 +73,22 @@ int_sum <- ddply(data, .(interval), summarize,
                  mean_steps = mean(steps, na.rm=T))
 
 # plot mean steps over time
-ggplot(int_sum, aes(x=interval, y=mean_steps))+
+ggplot(int_sum, aes(x=as.numeric(interval), y=mean_steps))+
   geom_line()+
   ggtitle("Average number of steps over time")
 ```
 
-![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
+![plot of chunk unnamed-chunk-27](figure/unnamed-chunk-27-1.png)
 
 *Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?*
 
 ```r
 # calculate time interval with the highest mean steps
-max_int <- max(int_sum$mean_steps, na.rm=T) 
+max_steps <- max(int_sum$mean_steps, na.rm=T) 
+max_int <- int_sum$interval[int_sum$mean_steps == max_steps]
 ```
 
-The intervall **206** contains the maximum number of steps on average. 
+The interval **`max_int`** contains the maximum number of steps on average. 
 
 
 
@@ -133,7 +137,7 @@ ggplot(sum_df_imp, aes(x=date, y=total_steps))+
 ## Warning: Ignoring unknown parameters: binwidth, bins, pad
 ```
 
-![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
+![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31-1.png)
 
 ```r
 # calculate mean of total steps per day
@@ -168,11 +172,11 @@ int_sum_weekend <- ddply(data_imp, .(interval, weekend), summarize,
                          mean_steps = mean(steps))
 
 # plot mean steps over time for each weekday and weekend
-ggplot(int_sum_weekend, aes(x=interval, y=mean_steps))+
+ggplot(int_sum_weekend, aes(x=as.numeric(interval), y=mean_steps))+
   geom_line()+
   ggtitle("Average number of steps over time for weekend/weekdays  \n(with imputated values)")+
   facet_wrap(.~weekend)
 ```
 
-![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
+![plot of chunk unnamed-chunk-33](figure/unnamed-chunk-33-1.png)
 
