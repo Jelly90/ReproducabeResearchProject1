@@ -2,9 +2,9 @@
 title: "ReproducableResearchProoject1"
 author: "Jelena"
 date: "February 25, 2019"
-output: 
-  keep_md: true
-  html_document:
+output:   
+  html_document: 
+    keep_md: true 
 ---
 
 

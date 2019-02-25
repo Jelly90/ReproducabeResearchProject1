@@ -2,9 +2,9 @@
 title: "ReproducableResearchProoject1"
 author: "Jelena"
 date: "February 25, 2019"
-output: 
-  keep_md: true
-  html_document:
+output:   
+  html_document: 
+    keep_md: true 
 ---
 
 
@@ -49,7 +49,7 @@ ggplot(sum_df, aes(x=date, y=total_steps))+
   ggtitle("Total number of steps taken per day")
 ```
 
-![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png)
+![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2-1.png)
 
 
 *Calculate and report the mean and median of the total number of steps taken per day*
@@ -79,7 +79,7 @@ ggplot(int_sum, aes(x=as.numeric(interval), y=mean_steps))+
   ggtitle("Average number of steps over time")
 ```
 
-![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-1.png)
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
 
 *Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?*
 
@@ -140,7 +140,7 @@ ggplot(sum_df_imp, aes(x=date, y=total_steps))+
 ## Warning: Ignoring unknown parameters: binwidth, bins, pad
 ```
 
-![plot of chunk unnamed-chunk-29](figure/unnamed-chunk-29-1.png)
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
 
 ```r
 # calculate mean of total steps per day
@@ -181,5 +181,5 @@ ggplot(int_sum_weekend, aes(x=as.numeric(interval), y=mean_steps))+
   facet_wrap(.~weekend)
 ```
 
-![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31-1.png)
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png)
 
